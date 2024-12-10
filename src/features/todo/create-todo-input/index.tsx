@@ -9,7 +9,7 @@ export default function CreateTodoInput() {
       value={todoTitle}
       onChange={handleTodoTitle}
       onKeyUp={handleEnter}
-      className="border border-red-400"
+      className="border border-red-400 w-full"
     />
   );
 }

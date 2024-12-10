@@ -17,9 +17,14 @@ export default function useHandleTodo(todo: Todo) {
   const onEditClick = () => handleEditTodo({ ...todo, status: !todo.status });
   const onDeleteClick = () => handleDeleteTodo(todo.id);
   const onEnterTodoTitle = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter" && todoTitle !== "") {
-      handleEditTodo({ ...todo, title: todoTitle });
+    if (e.key === "Enter") {
       setIsEditing(false);
+
+      if (todoTitle === "") {
+        return setTodoTitle(todo.title);
+      }
+
+      handleEditTodo({ ...todo, title: todoTitle });
     }
   };
 
