@@ -1,13 +1,10 @@
 {
-  "homepage": "https://kekezmen.github.io/react-todo-mvc",
   "name": "react-todo-mvc",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
     "start": "webpack serve",
     "build": "webpack",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
     "test": "jest"
   },
   "keywords": [],
@@ -31,7 +28,6 @@
     "babel-jest": "^29.7.0",
     "babel-loader": "^9.2.1",
     "css-loader": "^7.1.2",
-    "gh-pages": "^6.2.0",
     "html-webpack-plugin": "^5.6.3",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
