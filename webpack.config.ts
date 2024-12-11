@@ -16,7 +16,7 @@ export default () => {
     entry: path.resolve("./src/index.tsx"),
 
     output: {
-      path: path.resolve("build"),
+      path: path.resolve("public"),
       filename: "[name].[contenthash].js",
       clean: true,
     },
