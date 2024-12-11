@@ -7,6 +7,7 @@ export default function DoneAllTodosButton() {
   return (
     <button
       onClick={handleToggleAllTodos}
+      data-testid="toggle-todos"
       className="absolute flex items-center justify-center w-[60px] h-[60px]"
     >
       <svg

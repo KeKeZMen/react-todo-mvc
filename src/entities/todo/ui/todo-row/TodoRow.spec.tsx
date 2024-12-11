@@ -83,7 +83,7 @@ describe("TodoRow", () => {
 
     expect(input).toBeTruthy();
 
-    await userEvent.type(input, "abc{enter}");
+    await userEvent.type(input, "{enter}");
 
     expect(todo.title).toBe("New test value");
   });

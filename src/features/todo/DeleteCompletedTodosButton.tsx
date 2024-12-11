@@ -5,7 +5,11 @@ export default function DeleteCompletedTodosButton() {
   const { handleDeleteCompletedTodos } = useContext(TodosContext);
 
   return (
-    <button className="absolute right-0" onClick={handleDeleteCompletedTodos}>
+    <button
+      className="absolute right-0"
+      onClick={handleDeleteCompletedTodos}
+      data-testid="delete-completed"
+    >
       Delete completed
     </button>
   );

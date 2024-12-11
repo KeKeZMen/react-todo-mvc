@@ -20,7 +20,7 @@ export default function TodoBlock() {
   } = useTodos();
 
   return (
-    <div className="shadow-xl">
+    <div className="shadow-xl" data-testid="todos-block">
       <TodosContext.Provider
         value={{
           todos,
