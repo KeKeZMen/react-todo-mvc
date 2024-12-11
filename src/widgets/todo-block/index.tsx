@@ -1,5 +1,3 @@
-import { useMemo } from "react";
-
 import { TodosContext } from "@/entities/todo/context";
 import CreateTodoInput from "@/features/todo/create-todo-input";
 import TodoRow from "@/entities/todo/ui/todo-row";
@@ -12,16 +10,17 @@ import useTodos from "./hooks/use-todos";
 export default function TodoBlock() {
   const {
     todos,
-    todosLengts,
+    allTodosLength,
+    uncompletedTodosLength,
     handleCreateTodo,
     handleDeleteCompletedTodos,
     handleDeleteTodo,
     handleEditTodo,
-    handleDoneAllTodos,
+    handleToggleAllTodos,
   } = useTodos();
 
   return (
-    <div>
+    <div className="shadow-xl">
       <TodosContext.Provider
         value={{
           todos,
@@ -29,28 +28,33 @@ export default function TodoBlock() {
           handleDeleteCompletedTodos,
           handleDeleteTodo,
           handleEditTodo,
-          handleDoneAllTodos,
+          handleToggleAllTodos,
         }}
       >
-        <div className="flex flex-col">
+        <div className="flex flex-col w-[550px]">
           <div className="flex">
-            <DoneAllTodosButton />
+            {allTodosLength > 0 && <DoneAllTodosButton />}
             <CreateTodoInput />
           </div>
 
-          <div>
-            {todos.map((todo) => (
-              <TodoRow todo={todo} key={todo.id} />
-            ))}
-          </div>
+          {allTodosLength > 0 && (
+            <>
+              <div>
+                {todos.map((todo) => (
+                  <TodoRow todo={todo} key={todo.id} />
+                ))}
+              </div>
 
-          <div className="flex gap-3">
-            <p>
-              {todosLengts} {todosLengts == 1 ? "item" : "items"} left!
-            </p>
-            <Nav />
-            <DeleteCompletedTodosButton />
-          </div>
+              <div className="relative flex justify-center mx-5 py-3">
+                <p className="absolute left-0">
+                  {uncompletedTodosLength}{" "}
+                  {uncompletedTodosLength == 1 ? "item" : "items"} left!
+                </p>
+                <Nav />
+                <DeleteCompletedTodosButton />
+              </div>
+            </>
+          )}
         </div>
       </TodosContext.Provider>
     </div>

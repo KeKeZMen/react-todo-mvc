@@ -7,9 +7,10 @@ export default function CreateTodoInput() {
     <input
       type="text"
       value={todoTitle}
+      placeholder="What needs to be done?"
       onChange={handleTodoTitle}
       onKeyUp={handleEnter}
-      className="border border-red-400 w-full"
+      className="p-3 pl-[60px] text-2xl focus:outline-rose-400 outline-none size-full"
     />
   );
 }

@@ -4,5 +4,9 @@ import { useContext } from "react";
 export default function DeleteCompletedTodosButton() {
   const { handleDeleteCompletedTodos } = useContext(TodosContext);
 
-  return <button onClick={handleDeleteCompletedTodos}>Delete completed</button>;
+  return (
+    <button className="absolute right-0" onClick={handleDeleteCompletedTodos}>
+      Delete completed
+    </button>
+  );
 }

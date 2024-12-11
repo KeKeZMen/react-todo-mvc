@@ -26,13 +26,23 @@ export default function useTodos() {
   const handleDeleteCompletedTodos = () =>
     setTodos((prev) => prev.filter((todo) => !todo.status));
 
-  const handleDoneAllTodos = () =>
-    setTodos((prev) => prev.map((todo) => ({ ...todo, status: true })));
+  const handleToggleAllTodos = () => {
+    const isAllTodosCompleted =
+      todos.filter((todo) => todo.status).length === todos.length;
+    setTodos((prev) =>
+      prev.map((todo) => ({
+        ...todo,
+        status: isAllTodosCompleted ? false : true,
+      }))
+    );
+  };
 
-  const todosLengts = useMemo(
+  const uncompletedTodosLength = useMemo(
     () => todos.filter((todo) => !todo.status).length,
     [todos]
   );
+
+  const allTodosLength = useMemo(() => todos.length, [todos]);
 
   useEffect(() => {
     switch (pathname) {
@@ -56,11 +66,12 @@ export default function useTodos() {
 
   return {
     todos: filteredTodos,
-    todosLengts,
+    allTodosLength,
+    uncompletedTodosLength,
     handleCreateTodo,
     handleDeleteTodo,
     handleEditTodo,
     handleDeleteCompletedTodos,
-    handleDoneAllTodos,
+    handleToggleAllTodos,
   };
 }

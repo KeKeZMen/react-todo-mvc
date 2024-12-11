@@ -8,7 +8,7 @@ export type TodosContextType = {
   handleDeleteTodo: (id: number) => void;
   handleEditTodo: (todo: Todo) => void;
   handleDeleteCompletedTodos: () => void;
-  handleDoneAllTodos: () => void;
+  handleToggleAllTodos: () => void;
 } | null;
 
 export const TodosContext = createContext<TodosContextType>(null);
