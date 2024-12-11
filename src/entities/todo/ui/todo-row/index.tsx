@@ -22,6 +22,7 @@ export default function TodoRow({ todo }: Props) {
     <div className="flex justify-between items-center gap-3 mx-[30px] px-[30px] p-4 group relative">
       <button
         onClick={onEditClick}
+        data-testid="status-button"
         className="absolute border flex items-center justify-center p-1 left-0 rounded-full size-[24px]"
       >
         {todo.status ? (
@@ -49,6 +50,7 @@ export default function TodoRow({ todo }: Props) {
 
       {isEditing ? (
         <input
+          data-testid="edit-input"
           type="text"
           value={todoTitle}
           onChange={onChangeTodoTitle}
@@ -65,6 +67,7 @@ export default function TodoRow({ todo }: Props) {
 
       <button
         className="hidden group-hover:block absolute right-0"
+        data-testid="delete-button"
         onClick={onDeleteClick}
       >
         X
