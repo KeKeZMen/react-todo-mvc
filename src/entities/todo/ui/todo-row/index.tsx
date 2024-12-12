@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import clsx from "clsx";
 
 import { Todo } from "../../model";
@@ -24,23 +24,26 @@ export default function TodoRow({ todo }: Props) {
     setTodoTitle,
   } = useHandleTodo(todo);
 
-  useEffect(() => {
-    const handleWindowClick = (e: MouseEvent) => {
+  const handleWindowClick = useCallback(
+    (e: MouseEvent) => {
       if (e.target instanceof Node && !rootRef.current?.contains(e.target)) {
         setIsEditing(false);
         setTodoTitle(todo.title);
       }
-    };
-
-    window.addEventListener("click", handleWindowClick);
-
-    return () => {
-      window.removeEventListener("click", handleWindowClick);
-    };
-  }, []);
+    },
+    [todo.title, setIsEditing, setTodoTitle, rootRef]
+  );
 
   useEffect(() => {
-    if (inputRef.current) {
+    if (isEditing) {
+      window.addEventListener("click", handleWindowClick);
+    } else {
+      window.removeEventListener("click", handleWindowClick);
+    }
+  }, [isEditing, handleWindowClick]);
+
+  useEffect(() => {
+    if (inputRef.current && isEditing) {
       inputRef.current.focus();
     }
   }, [isEditing]);
