@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import clsx from "clsx";
 
 import { Todo } from "../../model";
@@ -8,22 +9,55 @@ type Props = {
 };
 
 export default function TodoRow({ todo }: Props) {
+  const rootRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+
   const {
     isEditing,
+    todoTitle,
     onChangeTodoTitle,
     onDeleteClick,
     onEditClick,
     onEditDoubleClick,
     onEnterTodoTitle,
-    todoTitle,
+    setIsEditing,
+    setTodoTitle,
   } = useHandleTodo(todo);
 
+  useEffect(() => {
+    const handleWindowClick = (e: MouseEvent) => {
+      if (e.target instanceof Node && !rootRef.current?.contains(e.target)) {
+        setIsEditing(false);
+        setTodoTitle(todo.title);
+      }
+    };
+
+    window.addEventListener("click", handleWindowClick);
+
+    return () => {
+      window.removeEventListener("click", handleWindowClick);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [isEditing]);
+
   return (
-    <div className="flex justify-between items-center gap-3 mx-[30px] px-[30px] p-4 group relative">
+    <div
+      ref={rootRef}
+      className={clsx(
+        "flex justify-between items-center gap-3 px-[60px] p-4 group relative border",
+        isEditing && "border-rose-500",
+        !isEditing && "border-white"
+      )}
+    >
       <button
         onClick={onEditClick}
         data-testid="status-button"
-        className="absolute border flex items-center justify-center p-1 left-0 rounded-full size-[24px]"
+        className="absolute border flex items-center justify-center p-1 left-[30px] rounded-full size-[24px]"
       >
         {todo.status ? (
           <svg
@@ -52,21 +86,26 @@ export default function TodoRow({ todo }: Props) {
         <input
           data-testid="edit-input"
           type="text"
+          className="ml-[10px] w-full outline-none"
           value={todoTitle}
           onChange={onChangeTodoTitle}
           onKeyUp={onEnterTodoTitle}
+          ref={inputRef}
         />
       ) : (
         <p
           onDoubleClick={onEditDoubleClick}
-          className={clsx("ml-[10px]", todo.status === true && "line-through")}
+          className={clsx(
+            "ml-[10px] w-full",
+            todo.status === true && "line-through"
+          )}
         >
           {todoTitle}
         </p>
       )}
 
       <button
-        className="hidden group-hover:block absolute right-0"
+        className="hidden group-hover:block absolute right-[30px]"
         data-testid="delete-button"
         onClick={onDeleteClick}
       >
